@@ -1,50 +1,58 @@
+# pins old : 29 31 32 33
+# pins new : 17 22 23 24
+
+import RPi.GPIO as gpio
 import time
-import RPi.GPIO as GPIO
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-
-print(" 0 ")
-
-GPIO.setup(29,GPIO.OUT)
-GPIO.setup(31,GPIO.OUT)
-
-GPIO.setup(32,GPIO.OUT)
-GPIO.setup(33,GPIO.OUT)
-
-print(" 1 ")
-
-GPIO.output(29, True)
-time.sleep(3)
-GPIO.output(29, False)
-
-print(" 2 ")
-
-time.sleep(3)
-
-GPIO.output(31, True)
-time.sleep(3)
-GPIO.output(31, False)
-
-print(" 3 ")
-
-time.sleep(3)
-
-GPIO.output(32, True)
-time.sleep(3)
-GPIO.output(32, False)
-
-print(" 4 ")
-
-time.sleep(3)
-
-GPIO.output(33, True)
-time.sleep(3)
-GPIO.output(33, False)
-
-print(" 5 ")
-
-time.sleep(3)
-
-exit()
-print(" 6 ")
+def init():    
+    gpio.setmode(gpio.BCM)
+    gpio.setup(29, gpio.OUT)
+    gpio.setup(31, gpio.OUT)
+    gpio.setup(32, gpio.OUT)
+    gpio.setup(33, gpio.OUT)
+def forward(sec):
+    init()
+    gpio.output(29, False)
+    gpio.output(31, True)
+    gpio.output(32, True)
+    gpio.output(33, False)
+    time.sleep(sec)
+    gpio.cleanup() 
+def reverse(sec):
+    init()
+    gpio.output(29, True)
+    gpio.output(31, False)
+    gpio.output(32, False)7
+    gpio.output(33, True)
+    time.sleep(sec)
+    gpio.cleanup()
+def left_turn(sec):
+    init()
+    gpio.output(29, True)
+    gpio.output(31, False)
+    gpio.output(32, True)
+    gpio.output(33, False)
+    time.sleep(sec)
+    gpio.cleanup()
+def right_turn(sec):
+    init()
+    gpio.output(29, False)
+    gpio.output(31, True)
+    gpio.output(32, False)
+    gpio.output(33, True)
+    time.sleep(sec)
+    gpio.cleanup()
+seconds = 3
+time.sleep(seconds)
+print("forward")
+forward(seconds)
+time.sleep(seconds-2)
+print("right")
+right_turn(seconds)
+time.sleep(seconds-2)
+time.sleep(seconds)
+print("forward")
+forward(seconds)
+time.sleep(seconds-2)
+print("right")
+right_turn(seconds)
+time.sleep(seconds-2)
